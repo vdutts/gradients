@@ -8,20 +8,29 @@ import { PresetSelector } from "@/components/PresetSelector";
 export interface ColorStop {
   color: string;
   position: number;
+  x?: number; // For mesh gradients
+  y?: number; // For mesh gradients
 }
 
 export interface GradientConfig {
-  type: "linear" | "radial" | "conic";
+  type: "linear" | "radial" | "conic" | "mesh" | "atmospheric";
   angle: number;
   stops: ColorStop[];
+  blur?: number;
+  noise?: number;
+  layers?: number;
 }
 
 const defaultGradient: GradientConfig = {
-  type: "linear",
+  type: "atmospheric",
   angle: 135,
+  blur: 60,
+  noise: 20,
+  layers: 3,
   stops: [
-    { color: "#3b82f6", position: 0 },
-    { color: "#8b5cf6", position: 100 },
+    { color: "#3b82f6", position: 0, x: 0, y: 0 },
+    { color: "#8b5cf6", position: 50, x: 50, y: 30 },
+    { color: "#a855f7", position: 100, x: 100, y: 100 },
   ],
 };
 

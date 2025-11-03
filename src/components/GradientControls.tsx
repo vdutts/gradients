@@ -12,7 +12,7 @@ interface GradientControlsProps {
 }
 
 export const GradientControls = ({ gradient, onChange }: GradientControlsProps) => {
-  const updateType = (type: "linear" | "radial" | "conic") => {
+  const updateType = (type: "linear" | "radial" | "conic" | "mesh" | "atmospheric") => {
     onChange({ ...gradient, type });
   };
 
@@ -20,10 +20,12 @@ export const GradientControls = ({ gradient, onChange }: GradientControlsProps) 
     onChange({ ...gradient, angle });
   };
 
-  const updateStop = (index: number, color?: string, position?: number) => {
+  const updateStop = (index: number, color?: string, position?: number, x?: number, y?: number) => {
     const newStops = [...gradient.stops];
     if (color !== undefined) newStops[index].color = color;
     if (position !== undefined) newStops[index].position = position;
+    if (x !== undefined) newStops[index].x = x;
+    if (y !== undefined) newStops[index].y = y;
     onChange({ ...gradient, stops: newStops });
   };
 
@@ -33,7 +35,12 @@ export const GradientControls = ({ gradient, onChange }: GradientControlsProps) 
       : 50;
     onChange({
       ...gradient,
-      stops: [...gradient.stops, { color: "#6366f1", position: newPosition }],
+      stops: [...gradient.stops, { 
+        color: "#6366f1", 
+        position: newPosition,
+        x: Math.random() * 100,
+        y: Math.random() * 100
+      }],
     });
   };
 
@@ -52,15 +59,15 @@ export const GradientControls = ({ gradient, onChange }: GradientControlsProps) 
         <Label>Gradient Type</Label>
         <Tabs value={gradient.type} onValueChange={(v) => updateType(v as any)}>
           <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="atmospheric">Organic</TabsTrigger>
             <TabsTrigger value="linear">Linear</TabsTrigger>
             <TabsTrigger value="radial">Radial</TabsTrigger>
-            <TabsTrigger value="conic">Conic</TabsTrigger>
           </TabsList>
         </Tabs>
       </div>
 
       {/* Angle Control */}
-      {(gradient.type === "linear" || gradient.type === "conic") && (
+      {(gradient.type === "linear" || gradient.type === "conic" || gradient.type === "atmospheric") && (
         <div className="space-y-3">
           <div className="flex justify-between">
             <Label>Angle</Label>
@@ -74,6 +81,39 @@ export const GradientControls = ({ gradient, onChange }: GradientControlsProps) 
             step={1}
           />
         </div>
+      )}
+
+      {/* Atmospheric Effects */}
+      {(gradient.type === "atmospheric" || gradient.type === "mesh") && (
+        <>
+          <div className="space-y-3">
+            <div className="flex justify-between">
+              <Label>Blur</Label>
+              <span className="text-sm text-muted-foreground">{gradient.blur || 0}px</span>
+            </div>
+            <Slider
+              value={[gradient.blur || 0]}
+              onValueChange={([value]) => onChange({ ...gradient, blur: value })}
+              min={0}
+              max={100}
+              step={1}
+            />
+          </div>
+          
+          <div className="space-y-3">
+            <div className="flex justify-between">
+              <Label>Noise</Label>
+              <span className="text-sm text-muted-foreground">{gradient.noise || 0}%</span>
+            </div>
+            <Slider
+              value={[gradient.noise || 0]}
+              onValueChange={([value]) => onChange({ ...gradient, noise: value })}
+              min={0}
+              max={100}
+              step={1}
+            />
+          </div>
+        </>
       )}
 
       {/* Color Stops */}
@@ -135,6 +175,38 @@ export const GradientControls = ({ gradient, onChange }: GradientControlsProps) 
                   step={1}
                 />
               </div>
+              
+              {/* Mesh positioning for atmospheric gradients */}
+              {(gradient.type === "atmospheric" || gradient.type === "mesh") && (
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="space-y-1">
+                    <div className="flex justify-between text-xs text-muted-foreground">
+                      <span>X</span>
+                      <span>{Math.round(stop.x || 0)}%</span>
+                    </div>
+                    <Slider
+                      value={[stop.x || 0]}
+                      onValueChange={([value]) => updateStop(index, undefined, undefined, value)}
+                      min={0}
+                      max={100}
+                      step={1}
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <div className="flex justify-between text-xs text-muted-foreground">
+                      <span>Y</span>
+                      <span>{Math.round(stop.y || 0)}%</span>
+                    </div>
+                    <Slider
+                      value={[stop.y || 0]}
+                      onValueChange={([value]) => updateStop(index, undefined, undefined, undefined, value)}
+                      min={0}
+                      max={100}
+                      step={1}
+                    />
+                  </div>
+                </div>
+              )}
             </div>
           ))}
         </div>

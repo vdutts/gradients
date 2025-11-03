@@ -17,6 +17,13 @@ export const GradientCanvas = ({ gradient }: GradientCanvasProps) => {
       .map(stop => `${stop.color} ${stop.position}%`)
       .join(", ");
 
+    if (gradient.type === "atmospheric" || gradient.type === "mesh") {
+      // Create organic, atmospheric gradient using multiple layers
+      const baseGradient = `linear-gradient(${gradient.angle}deg, ${colors})`;
+      const overlayGradient = `radial-gradient(ellipse at 30% 20%, rgba(59, 130, 246, 0.3) 0%, transparent 50%), radial-gradient(ellipse at 70% 80%, rgba(139, 92, 246, 0.3) 0%, transparent 50%)`;
+      return `${overlayGradient}, ${baseGradient}`;
+    }
+
     switch (gradient.type) {
       case "linear":
         return `linear-gradient(${gradient.angle}deg, ${colors})`;
@@ -24,11 +31,13 @@ export const GradientCanvas = ({ gradient }: GradientCanvasProps) => {
         return `radial-gradient(circle, ${colors})`;
       case "conic":
         return `conic-gradient(from ${gradient.angle}deg, ${colors})`;
+      default:
+        return `linear-gradient(${gradient.angle}deg, ${colors})`;
     }
   };
 
   const handleCopyCSS = () => {
-    const css = `background: ${generateGradientCSS()};`;
+    const css = `background: ${generateGradientCSS()};\nfilter: blur(${gradient.blur || 0}px);`;
     navigator.clipboard.writeText(css);
     toast.success("CSS copied to clipboard!");
   };
@@ -137,13 +146,28 @@ export const GradientCanvas = ({ gradient }: GradientCanvasProps) => {
     } : null;
   };
 
+  const canvasStyle: React.CSSProperties = {
+    background: generateGradientCSS(),
+    filter: `blur(${(gradient.blur || 0) / 4}px)`,
+    transition: "all 0.3s ease-in-out",
+  };
+
   return (
     <div className="h-full flex flex-col gap-4">
       <div
         ref={canvasRef}
-        className="flex-1 rounded-xl shadow-lg transition-all duration-300 min-h-[300px]"
-        style={{ background: generateGradientCSS() }}
-      />
+        className="flex-1 rounded-xl shadow-lg min-h-[300px] relative overflow-hidden"
+        style={canvasStyle}
+      >
+        {gradient.noise && (
+          <div 
+            className="absolute inset-0 opacity-20 mix-blend-overlay"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+            }}
+          />
+        )}
+      </div>
       
       <div className="flex gap-2">
         <Button
