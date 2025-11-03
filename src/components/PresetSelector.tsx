@@ -1,5 +1,6 @@
 import { Card } from "./ui/card";
 import { Label } from "./ui/label";
+import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 import type { GradientConfig } from "@/pages/Index";
 
 interface PresetSelectorProps {
@@ -97,22 +98,25 @@ export const PresetSelector = ({ onSelect }: PresetSelectorProps) => {
   };
 
   return (
-    <Card className="p-6 space-y-3">
+    <Card className="p-4 space-y-3">
       <Label>Presets</Label>
-      <div className="grid grid-cols-3 gap-2">
-        {presets.map((preset, index) => (
-          <button
-            key={index}
-            onClick={() => onSelect(preset)}
-            className="aspect-square rounded-lg border-2 border-transparent hover:border-primary transition-all cursor-pointer active:scale-95 relative overflow-hidden"
-            style={{ 
-              background: generatePreviewGradient(preset),
-              filter: `blur(${(preset.blur || 0) / 8}px)`
-            }}
-            aria-label={`Preset gradient ${index + 1}`}
-          />
-        ))}
-      </div>
+      <ScrollArea className="w-full whitespace-nowrap">
+        <div className="flex gap-2 pb-2">
+          {presets.map((preset, index) => (
+            <button
+              key={index}
+              onClick={() => onSelect(preset)}
+              className="h-24 w-24 flex-shrink-0 rounded-lg border-2 border-transparent hover:border-primary transition-all cursor-pointer active:scale-95 relative overflow-hidden"
+              style={{ 
+                background: generatePreviewGradient(preset),
+                filter: `blur(${(preset.blur || 0) / 8}px)`
+              }}
+              aria-label={`Preset gradient ${index + 1}`}
+            />
+          ))}
+        </div>
+        <ScrollBar orientation="horizontal" />
+      </ScrollArea>
     </Card>
   );
 };

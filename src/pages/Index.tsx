@@ -2,8 +2,10 @@ import { useState } from "react";
 import { GradientCanvas } from "@/components/GradientCanvas";
 import { GradientControls } from "@/components/GradientControls";
 import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
 import { PresetSelector } from "@/components/PresetSelector";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
+import { Settings } from "lucide-react";
 
 export interface ColorStop {
   color: string;
@@ -36,27 +38,46 @@ const defaultGradient: GradientConfig = {
 
 const Index = () => {
   const [gradient, setGradient] = useState<GradientConfig>(defaultGradient);
+  const [open, setOpen] = useState(false);
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
+    <div className="min-h-screen flex flex-col">
       <Header />
       
-      <main className="flex-1 container mx-auto px-4 py-6 md:py-8">
-        <div className="grid lg:grid-cols-[1fr_400px] gap-6 h-[calc(100vh-200px)]">
-          {/* Gradient Preview */}
-          <div className="order-2 lg:order-1">
-            <GradientCanvas gradient={gradient} />
-          </div>
-
-          {/* Controls */}
-          <div className="order-1 lg:order-2 flex flex-col gap-6 overflow-y-auto">
-            <PresetSelector onSelect={setGradient} />
-            <GradientControls gradient={gradient} onChange={setGradient} />
-          </div>
-        </div>
+      {/* Full-screen gradient canvas */}
+      <main className="flex-1 relative">
+        <GradientCanvas gradient={gradient} />
+        
+        {/* Floating controls button - mobile & desktop */}
+        <Sheet open={open} onOpenChange={setOpen}>
+          <SheetTrigger asChild>
+            <Button
+              size="lg"
+              className="fixed bottom-6 right-6 z-50 rounded-full shadow-2xl h-14 w-14 md:h-16 md:w-16"
+              aria-label="Open controls"
+            >
+              <Settings className="h-6 w-6" />
+            </Button>
+          </SheetTrigger>
+          
+          <SheetContent 
+            side="right" 
+            className="w-full sm:max-w-lg overflow-y-auto p-0"
+          >
+            <div className="p-6 space-y-6">
+              <div>
+                <h2 className="text-2xl font-bold mb-2">Gradient Controls</h2>
+                <p className="text-sm text-muted-foreground">
+                  Customize your atmospheric gradient
+                </p>
+              </div>
+              
+              <PresetSelector onSelect={setGradient} />
+              <GradientControls gradient={gradient} onChange={setGradient} />
+            </div>
+          </SheetContent>
+        </Sheet>
       </main>
-
-      <Footer />
     </div>
   );
 };

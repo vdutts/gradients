@@ -57,7 +57,7 @@ export const GradientCanvas = ({ gradient }: GradientCanvasProps) => {
       let grd;
       const sortedStops = [...gradient.stops].sort((a, b) => a.position - b.position);
       
-      if (gradient.type === "linear") {
+      if (gradient.type === "linear" || gradient.type === "atmospheric") {
         const angleRad = (gradient.angle - 90) * (Math.PI / 180);
         const x1 = canvas.width / 2 + Math.cos(angleRad) * canvas.width;
         const y1 = canvas.height / 2 + Math.sin(angleRad) * canvas.height;
@@ -70,7 +70,7 @@ export const GradientCanvas = ({ gradient }: GradientCanvasProps) => {
           canvas.width / 2, canvas.height / 2, Math.max(canvas.width, canvas.height) / 2
         );
       } else {
-        // Conic gradient - approximate with multiple linear gradients
+        // Conic gradient approximation
         const centerX = canvas.width / 2;
         const centerY = canvas.height / 2;
         const segments = 360;
@@ -108,12 +108,14 @@ export const GradientCanvas = ({ gradient }: GradientCanvasProps) => {
         return;
       }
 
-      sortedStops.forEach(stop => {
-        grd.addColorStop(stop.position / 100, stop.color);
-      });
+      if (grd) {
+        sortedStops.forEach(stop => {
+          grd.addColorStop(stop.position / 100, stop.color);
+        });
 
-      ctx.fillStyle = grd;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = grd;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      }
 
       const link = document.createElement("a");
       link.download = "gradient.png";
@@ -125,7 +127,6 @@ export const GradientCanvas = ({ gradient }: GradientCanvasProps) => {
     }
   };
 
-  // Helper function to interpolate between colors
   const interpolateColor = (color1: string, color2: string, factor: number): string => {
     const c1 = hexToRgb(color1);
     const c2 = hexToRgb(color2);
@@ -153,10 +154,11 @@ export const GradientCanvas = ({ gradient }: GradientCanvasProps) => {
   };
 
   return (
-    <div className="h-full flex flex-col gap-4">
+    <div className="absolute inset-0 flex flex-col">
+      {/* Full-screen gradient */}
       <div
         ref={canvasRef}
-        className="flex-1 rounded-xl shadow-lg min-h-[300px] relative overflow-hidden"
+        className="flex-1 relative overflow-hidden"
         style={canvasStyle}
       >
         {gradient.noise && (
@@ -169,22 +171,25 @@ export const GradientCanvas = ({ gradient }: GradientCanvasProps) => {
         )}
       </div>
       
-      <div className="flex gap-2">
+      {/* Action buttons - floating at bottom */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3 z-40">
         <Button
           onClick={handleCopyCSS}
-          variant="outline"
-          className="flex-1"
+          variant="secondary"
+          size="lg"
+          className="shadow-xl backdrop-blur-sm bg-background/90 hover:bg-background"
           aria-label="Copy CSS"
         >
-          <Copy className="h-4 w-4 mr-2" />
+          <Copy className="h-5 w-5 mr-2" />
           Copy CSS
         </Button>
         <Button
           onClick={handleDownload}
-          className="flex-1"
+          size="lg"
+          className="shadow-xl"
           aria-label="Download gradient"
         >
-          <Download className="h-4 w-4 mr-2" />
+          <Download className="h-5 w-5 mr-2" />
           Download
         </Button>
       </div>
