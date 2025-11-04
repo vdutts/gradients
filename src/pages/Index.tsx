@@ -3,7 +3,7 @@ import { GradientCanvas } from "@/components/GradientCanvas";
 import { GradientControls } from "@/components/GradientControls";
 import { Header } from "@/components/Header";
 import { PresetSelector } from "@/components/PresetSelector";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Settings } from "lucide-react";
 
@@ -62,16 +62,16 @@ const Index = () => {
           
           <SheetContent 
             side="right" 
-            className="w-full sm:max-w-lg overflow-y-auto p-0"
+            className="w-full sm:max-w-lg overflow-y-auto"
           >
-            <div className="p-6 space-y-6">
-              <div>
-                <h2 className="text-2xl font-bold mb-2">Gradient Controls</h2>
-                <p className="text-sm text-muted-foreground">
-                  Customize your atmospheric gradient
-                </p>
-              </div>
-              
+            <SheetHeader>
+              <SheetTitle>Gradient Controls</SheetTitle>
+              <SheetDescription>
+                Customize your atmospheric gradient
+              </SheetDescription>
+            </SheetHeader>
+            
+            <div className="mt-6 space-y-6">
               <PresetSelector onSelect={setGradient} />
               <GradientControls gradient={gradient} onChange={setGradient} />
             </div>
