@@ -7,18 +7,21 @@ interface PresetSelectorProps {
   onSelect: (gradient: GradientConfig) => void;
 }
 
+// Using consistent pastel colors to show shape/configuration differences, not color differences
+const PRESET_COLORS = ["#c7b8ea", "#e8c5e5", "#d4b5e3", "#b5d4e1"];
+
 const presets: GradientConfig[] = [
-  // Atmospheric presets matching the reference image style
+  // Atmospheric presets - focusing on shape/pattern variations
   {
     type: "atmospheric",
     angle: 135,
     blur: 40,
     noise: 15,
     stops: [
-      { color: "#2563eb", position: 0, x: 10, y: 10 },
-      { color: "#3b82f6", position: 30, x: 40, y: 20 },
-      { color: "#8b5cf6", position: 70, x: 60, y: 80 },
-      { color: "#a855f7", position: 100, x: 90, y: 90 },
+      { color: PRESET_COLORS[0], position: 0, x: 10, y: 10 },
+      { color: PRESET_COLORS[1], position: 30, x: 40, y: 20 },
+      { color: PRESET_COLORS[2], position: 70, x: 60, y: 80 },
+      { color: PRESET_COLORS[3], position: 100, x: 90, y: 90 },
     ],
   },
   {
@@ -27,10 +30,10 @@ const presets: GradientConfig[] = [
     blur: 60,
     noise: 25,
     stops: [
-      { color: "#1e40af", position: 0, x: 0, y: 0 },
-      { color: "#6366f1", position: 40, x: 30, y: 60 },
-      { color: "#ec4899", position: 80, x: 70, y: 30 },
-      { color: "#f59e0b", position: 100, x: 100, y: 100 },
+      { color: PRESET_COLORS[0], position: 0, x: 0, y: 0 },
+      { color: PRESET_COLORS[1], position: 40, x: 30, y: 60 },
+      { color: PRESET_COLORS[2], position: 80, x: 70, y: 30 },
+      { color: PRESET_COLORS[3], position: 100, x: 100, y: 100 },
     ],
   },
   {
@@ -39,35 +42,35 @@ const presets: GradientConfig[] = [
     blur: 50,
     noise: 20,
     stops: [
-      { color: "#0ea5e9", position: 0, x: 20, y: 80 },
-      { color: "#3b82f6", position: 35, x: 50, y: 50 },
-      { color: "#8b5cf6", position: 65, x: 80, y: 20 },
-      { color: "#ec4899", position: 100, x: 100, y: 0 },
+      { color: PRESET_COLORS[0], position: 0, x: 20, y: 80 },
+      { color: PRESET_COLORS[1], position: 35, x: 50, y: 50 },
+      { color: PRESET_COLORS[2], position: 65, x: 80, y: 20 },
+      { color: PRESET_COLORS[3], position: 100, x: 100, y: 0 },
     ],
   },
-  // Some geometric ones for variety
+  // Geometric presets showing different shapes
   {
     type: "linear",
     angle: 135,
     stops: [
-      { color: "#3b82f6", position: 0 },
-      { color: "#8b5cf6", position: 100 },
+      { color: PRESET_COLORS[0], position: 0 },
+      { color: PRESET_COLORS[3], position: 100 },
     ],
   },
   {
     type: "radial",
     angle: 0,
     stops: [
-      { color: "#f59e0b", position: 0 },
-      { color: "#ef4444", position: 100 },
+      { color: PRESET_COLORS[1], position: 0 },
+      { color: PRESET_COLORS[2], position: 100 },
     ],
   },
   {
     type: "linear",
     angle: 90,
     stops: [
-      { color: "#0ea5e9", position: 0 },
-      { color: "#6366f1", position: 100 },
+      { color: PRESET_COLORS[0], position: 0 },
+      { color: PRESET_COLORS[2], position: 100 },
     ],
   },
 ];

@@ -1,4 +1,4 @@
-import { Palette, Github } from "lucide-react";
+import { Waves, Github } from "lucide-react";
 import { Button } from "./ui/button";
 
 export const Header = () => {
@@ -7,13 +7,7 @@ export const Header = () => {
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="p-2 bg-primary/10 rounded-lg">
-            <Palette className="h-5 w-5 md:h-6 md:w-6 text-primary" />
-          </div>
-          <div>
-            <h1 className="text-lg md:text-xl font-bold">Gradients</h1>
-            <p className="text-xs text-muted-foreground hidden sm:block">
-              Create beautiful gradient wallpapers
-            </p>
+            <Waves className="h-5 w-5 md:h-6 md:w-6 text-primary" />
           </div>
         </div>
         

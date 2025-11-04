@@ -3,9 +3,8 @@ import { GradientCanvas } from "@/components/GradientCanvas";
 import { GradientControls } from "@/components/GradientControls";
 import { Header } from "@/components/Header";
 import { PresetSelector } from "@/components/PresetSelector";
-import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import { Settings } from "lucide-react";
+import { SidebarProvider, Sidebar, SidebarContent, SidebarTrigger } from "@/components/ui/sidebar";
+import { PanelRightOpen } from "lucide-react";
 
 export interface ColorStop {
   color: string;
@@ -38,47 +37,39 @@ const defaultGradient: GradientConfig = {
 
 const Index = () => {
   const [gradient, setGradient] = useState<GradientConfig>(defaultGradient);
-  const [open, setOpen] = useState(false);
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
-      
-      {/* Full-screen gradient canvas */}
-      <main className="flex-1 relative">
-        <GradientCanvas gradient={gradient} />
+    <SidebarProvider defaultOpen={false}>
+      <div className="min-h-screen flex flex-col w-full">
+        <Header />
         
-        {/* Floating controls button - mobile & desktop */}
-        <Sheet open={open} onOpenChange={setOpen}>
-          <SheetTrigger asChild>
-            <Button
-              size="lg"
-              className="fixed bottom-6 right-6 z-50 rounded-full shadow-2xl h-14 w-14 md:h-16 md:w-16"
-              aria-label="Open controls"
-            >
-              <Settings className="h-6 w-6" />
-            </Button>
-          </SheetTrigger>
-          
-          <SheetContent 
-            side="right" 
-            className="w-full sm:max-w-lg overflow-y-auto"
-          >
-            <SheetHeader>
-              <SheetTitle>Gradient Controls</SheetTitle>
-              <SheetDescription>
-                Customize your atmospheric gradient
-              </SheetDescription>
-            </SheetHeader>
+        <div className="flex-1 flex w-full relative">
+          {/* Full-screen gradient canvas */}
+          <main className="flex-1 relative">
+            <GradientCanvas gradient={gradient} />
             
-            <div className="mt-6 space-y-6">
+            {/* Floating sidebar trigger */}
+            <SidebarTrigger className="fixed top-1/2 right-4 -translate-y-1/2 z-50 glass-dark rounded-full h-12 w-12 flex items-center justify-center hover:scale-110 transition-transform shadow-lg">
+              <PanelRightOpen className="h-5 w-5 text-white" />
+            </SidebarTrigger>
+          </main>
+
+          {/* Collapsible sidebar with controls */}
+          <Sidebar side="right" className="border-l-0" collapsible="offcanvas">
+            <SidebarContent className="p-6 space-y-6 overflow-y-auto">
+              <div>
+                <h2 className="text-xl font-bold mb-1">Controls</h2>
+                <p className="text-sm text-muted-foreground">
+                  Customize your gradient
+                </p>
+              </div>
               <PresetSelector onSelect={setGradient} />
               <GradientControls gradient={gradient} onChange={setGradient} />
-            </div>
-          </SheetContent>
-        </Sheet>
-      </main>
-    </div>
+            </SidebarContent>
+          </Sidebar>
+        </div>
+      </div>
+    </SidebarProvider>
   );
 };
 

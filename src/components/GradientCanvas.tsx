@@ -1,6 +1,5 @@
 import { useRef } from "react";
 import { Download, Copy } from "lucide-react";
-import { Button } from "./ui/button";
 import { toast } from "sonner";
 import type { GradientConfig } from "@/pages/Index";
 
@@ -171,27 +170,22 @@ export const GradientCanvas = ({ gradient }: GradientCanvasProps) => {
         )}
       </div>
       
-      {/* Action buttons - floating at bottom */}
+      {/* Glassy action buttons */}
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3 z-40">
-        <Button
+        <button
           onClick={handleCopyCSS}
-          variant="secondary"
-          size="lg"
-          className="shadow-xl backdrop-blur-sm bg-background/90 hover:bg-background"
+          className="glass-dark rounded-full h-12 w-12 flex items-center justify-center hover:scale-110 transition-transform shadow-lg"
           aria-label="Copy CSS"
         >
-          <Copy className="h-5 w-5 mr-2" />
-          Copy CSS
-        </Button>
-        <Button
+          <Copy className="h-5 w-5 text-white" />
+        </button>
+        <button
           onClick={handleDownload}
-          size="lg"
-          className="shadow-xl"
+          className="glass-dark rounded-full h-12 w-12 flex items-center justify-center hover:scale-110 transition-transform shadow-lg"
           aria-label="Download gradient"
         >
-          <Download className="h-5 w-5 mr-2" />
-          Download
-        </Button>
+          <Download className="h-5 w-5 text-white" />
+        </button>
       </div>
     </div>
   );
