@@ -50,7 +50,7 @@ const Index = () => {
           </main>
 
           {/* Collapsible sidebar with controls */}
-          <Sidebar side="right" className="border-l-0 w-[360px]" collapsible="offcanvas" style={{ background: 'rgba(0, 0, 0, 0.25)', backdropFilter: 'blur(20px)', borderLeft: '1px solid rgba(255, 255, 255, 0.05)' }}>
+          <Sidebar side="right" className="border-l-0 w-[360px]" collapsible="offcanvas" style={{ background: 'rgba(255, 255, 255, 0.06)', backdropFilter: 'blur(24px)', borderLeft: '1px solid rgba(255, 255, 255, 0.10)' }}>
             <SidebarContent className="p-8 space-y-8 overflow-y-auto bg-transparent">
               <div className="flex items-center justify-between">
                 <h2 className="text-lg font-semibold text-white">Controls</h2>
