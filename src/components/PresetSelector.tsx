@@ -111,19 +111,19 @@ export const PresetSelector = ({ onSelect }: PresetSelectorProps) => {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button variant="outline" className="w-full glass-dark border-white/10 text-white hover:bg-white/10">
+        <Button variant="outline" className="w-full bg-white/5 border-white/10 text-white hover:bg-white/10 h-11 rounded-xl">
           <Sparkles className="h-4 w-4 mr-2" />
           Presets
         </Button>
       </DrawerTrigger>
-      <DrawerContent className="glass-dark border-white/10">
+      <DrawerContent style={{ background: 'rgba(0, 0, 0, 0.4)', backdropFilter: 'blur(30px)', borderTop: '1px solid rgba(255, 255, 255, 0.1)' }}>
         <DrawerHeader>
-          <DrawerTitle className="text-white">Choose a Preset</DrawerTitle>
-          <DrawerDescription className="text-white/70">
+          <DrawerTitle className="text-white text-xl">Choose a Preset</DrawerTitle>
+          <DrawerDescription className="text-white/60">
             Select a gradient style to get started
           </DrawerDescription>
         </DrawerHeader>
-        <div className="p-6 grid grid-cols-3 gap-4 max-h-[60vh] overflow-y-auto">
+        <div className="p-6 grid grid-cols-3 gap-4 max-h-[60vh] overflow-y-auto pb-8">
           {presets.map((preset, index) => (
             <button
               key={index}

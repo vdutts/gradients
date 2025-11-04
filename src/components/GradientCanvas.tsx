@@ -171,20 +171,22 @@ export const GradientCanvas = ({ gradient }: GradientCanvasProps) => {
       </div>
       
       {/* Glassy action buttons - aligned to right */}
-      <div className="fixed bottom-6 right-6 flex flex-col gap-3 z-40">
+      <div className="fixed bottom-8 right-8 flex flex-col gap-3 z-40">
         <button
           onClick={handleCopyCSS}
-          className="glass-dark rounded-full h-14 w-14 flex items-center justify-center hover:scale-110 transition-transform shadow-lg"
+          className="rounded-full h-12 w-12 flex items-center justify-center hover:scale-105 transition-all"
+          style={{ background: 'rgba(255, 255, 255, 0.08)', backdropFilter: 'blur(20px)', border: '1px solid rgba(255, 255, 255, 0.1)' }}
           aria-label="Copy CSS"
         >
-          <Copy className="h-5 w-5 text-white" />
+          <Copy className="h-4 w-4 text-white/90" />
         </button>
         <button
           onClick={handleDownload}
-          className="glass-dark rounded-full h-14 w-14 flex items-center justify-center hover:scale-110 transition-transform shadow-lg"
+          className="rounded-full h-12 w-12 flex items-center justify-center hover:scale-105 transition-all"
+          style={{ background: 'rgba(255, 255, 255, 0.08)', backdropFilter: 'blur(20px)', border: '1px solid rgba(255, 255, 255, 0.1)' }}
           aria-label="Download gradient"
         >
-          <Download className="h-5 w-5 text-white" />
+          <Download className="h-4 w-4 text-white/90" />
         </button>
       </div>
     </div>

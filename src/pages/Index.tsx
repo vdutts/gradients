@@ -50,12 +50,12 @@ const Index = () => {
           </main>
 
           {/* Collapsible sidebar with controls */}
-          <Sidebar side="right" className="border-l-0 glass-dark border-l border-white/5" collapsible="offcanvas">
-            <SidebarContent className="p-6 space-y-6 overflow-y-auto bg-transparent">
+          <Sidebar side="right" className="border-l-0 w-[360px]" collapsible="offcanvas" style={{ background: 'rgba(0, 0, 0, 0.25)', backdropFilter: 'blur(20px)', borderLeft: '1px solid rgba(255, 255, 255, 0.05)' }}>
+            <SidebarContent className="p-8 space-y-8 overflow-y-auto bg-transparent">
               <div className="flex items-center justify-between">
-                <h2 className="text-xl font-bold text-white">Controls</h2>
-                <SidebarTrigger className="glass-dark rounded-full h-10 w-10 flex items-center justify-center hover:scale-110 transition-transform">
-                  <ChevronRight className="h-5 w-5 text-white" />
+                <h2 className="text-lg font-semibold text-white">Controls</h2>
+                <SidebarTrigger className="rounded-full h-9 w-9 flex items-center justify-center hover:bg-white/10 transition-all bg-white/5">
+                  <ChevronRight className="h-4 w-4 text-white/70" />
                 </SidebarTrigger>
               </div>
               <PresetSelector onSelect={setGradient} />
@@ -64,8 +64,11 @@ const Index = () => {
           </Sidebar>
           
           {/* Floating sidebar trigger when closed */}
-          <SidebarTrigger className="fixed top-1/2 right-4 -translate-y-1/2 z-40 glass-dark rounded-full h-12 w-12 flex items-center justify-center hover:scale-110 transition-transform shadow-lg data-[state=open]:hidden">
-            <ChevronLeft className="h-5 w-5 text-white" />
+          <SidebarTrigger 
+            className="fixed top-1/2 right-6 -translate-y-1/2 z-40 rounded-full h-12 w-12 flex items-center justify-center hover:scale-105 transition-all data-[state=open]:hidden"
+            style={{ background: 'rgba(255, 255, 255, 0.08)', backdropFilter: 'blur(20px)', border: '1px solid rgba(255, 255, 255, 0.1)' }}
+          >
+            <ChevronLeft className="h-4 w-4 text-white/90" />
           </SidebarTrigger>
         </div>
       </div>
