@@ -1,6 +1,7 @@
-import { Card } from "./ui/card";
-import { Label } from "./ui/label";
-import { ScrollArea, ScrollBar } from "./ui/scroll-area";
+import { useState } from "react";
+import { Button } from "./ui/button";
+import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from "./ui/drawer";
+import { Sparkles } from "lucide-react";
 import type { GradientConfig } from "@/pages/Index";
 
 interface PresetSelectorProps {
@@ -76,6 +77,8 @@ const presets: GradientConfig[] = [
 ];
 
 export const PresetSelector = ({ onSelect }: PresetSelectorProps) => {
+  const [open, setOpen] = useState(false);
+
   const generatePreviewGradient = (preset: GradientConfig): string => {
     const colors = preset.stops
       .sort((a, b) => a.position - b.position)
@@ -84,7 +87,7 @@ export const PresetSelector = ({ onSelect }: PresetSelectorProps) => {
 
     if (preset.type === "atmospheric" || preset.type === "mesh") {
       const baseGradient = `linear-gradient(${preset.angle}deg, ${colors})`;
-      const overlayGradient = `radial-gradient(ellipse at 30% 20%, rgba(59, 130, 246, 0.3) 0%, transparent 50%), radial-gradient(ellipse at 70% 80%, rgba(139, 92, 246, 0.3) 0%, transparent 50%)`;
+      const overlayGradient = `radial-gradient(ellipse at 30% 20%, rgba(199, 184, 234, 0.3) 0%, transparent 50%), radial-gradient(ellipse at 70% 80%, rgba(232, 197, 229, 0.3) 0%, transparent 50%)`;
       return `${overlayGradient}, ${baseGradient}`;
     }
 
@@ -100,16 +103,32 @@ export const PresetSelector = ({ onSelect }: PresetSelectorProps) => {
     }
   };
 
+  const handleSelect = (preset: GradientConfig) => {
+    onSelect(preset);
+    setOpen(false);
+  };
+
   return (
-    <Card className="p-4 space-y-3">
-      <Label>Presets</Label>
-      <ScrollArea className="w-full whitespace-nowrap">
-        <div className="flex gap-2 pb-2">
+    <Drawer open={open} onOpenChange={setOpen}>
+      <DrawerTrigger asChild>
+        <Button variant="outline" className="w-full glass-dark border-white/10 text-white hover:bg-white/10">
+          <Sparkles className="h-4 w-4 mr-2" />
+          Presets
+        </Button>
+      </DrawerTrigger>
+      <DrawerContent className="glass-dark border-white/10">
+        <DrawerHeader>
+          <DrawerTitle className="text-white">Choose a Preset</DrawerTitle>
+          <DrawerDescription className="text-white/70">
+            Select a gradient style to get started
+          </DrawerDescription>
+        </DrawerHeader>
+        <div className="p-6 grid grid-cols-3 gap-4 max-h-[60vh] overflow-y-auto">
           {presets.map((preset, index) => (
             <button
               key={index}
-              onClick={() => onSelect(preset)}
-              className="h-24 w-24 flex-shrink-0 rounded-lg border-2 border-transparent hover:border-primary transition-all cursor-pointer active:scale-95 relative overflow-hidden"
+              onClick={() => handleSelect(preset)}
+              className="h-32 rounded-2xl border-2 border-white/10 hover:border-white/30 transition-all cursor-pointer active:scale-95 relative overflow-hidden"
               style={{ 
                 background: generatePreviewGradient(preset),
                 filter: `blur(${(preset.blur || 0) / 8}px)`
@@ -118,8 +137,7 @@ export const PresetSelector = ({ onSelect }: PresetSelectorProps) => {
             />
           ))}
         </div>
-        <ScrollBar orientation="horizontal" />
-      </ScrollArea>
-    </Card>
+      </DrawerContent>
+    </Drawer>
   );
 };

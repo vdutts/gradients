@@ -1,38 +1,31 @@
-import { Waves, Github } from "lucide-react";
-import { Button } from "./ui/button";
+import { Waves } from "lucide-react";
 
 export const Header = () => {
   return (
-    <header className="border-b border-border/50 bg-background/80 backdrop-blur-md sticky top-0 z-50">
-      <div className="container mx-auto px-4 py-3 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="p-2 bg-primary/10 rounded-lg">
-            <Waves className="h-5 w-5 md:h-6 md:w-6 text-primary" />
-          </div>
+    <header className="fixed top-0 left-0 right-0 z-50 glass border-b border-white/5">
+      <div className="container flex h-16 items-center px-4">
+        <div className="flex items-center gap-2">
+          <Waves className="h-6 w-6 text-white" />
         </div>
         
-        <div className="flex items-center gap-2">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-9 w-9"
-            onClick={() => window.open('https://github.com/vdutts7', '_blank')}
-            aria-label="GitHub"
+        <nav className="ml-auto flex items-center gap-4">
+          <a
+            href="https://github.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-white/70 hover:text-white transition-colors"
           >
-            <Github className="h-5 w-5" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-9 w-9"
-            onClick={() => window.open('https://x.com/vdutts7', '_blank')}
-            aria-label="X (Twitter)"
+            GitHub
+          </a>
+          <a
+            href="https://twitter.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-white/70 hover:text-white transition-colors"
           >
-            <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-            </svg>
-          </Button>
-        </div>
+            Twitter
+          </a>
+        </nav>
       </div>
     </header>
   );

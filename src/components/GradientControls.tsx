@@ -56,8 +56,8 @@ export const GradientControls = ({ gradient, onChange }: GradientControlsProps) 
   return (
     <div className="space-y-4">
       {/* Gradient Type */}
-      <Card className="p-4 space-y-3">
-        <Label>Gradient Type</Label>
+      <Card className="p-4 space-y-3 glass-dark border-white/10">
+        <Label className="text-white">Gradient Type</Label>
         <Tabs value={gradient.type} onValueChange={(v) => updateType(v as any)}>
           <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="atmospheric">Organic</TabsTrigger>
@@ -69,10 +69,10 @@ export const GradientControls = ({ gradient, onChange }: GradientControlsProps) 
 
       {/* Angle Control */}
       {(gradient.type === "linear" || gradient.type === "conic" || gradient.type === "atmospheric") && (
-        <Card className="p-4 space-y-3">
+        <Card className="p-4 space-y-3 glass-dark border-white/10">
           <div className="flex justify-between">
-            <Label>Angle</Label>
-            <span className="text-sm text-muted-foreground">{gradient.angle}°</span>
+            <Label className="text-white">Angle</Label>
+            <span className="text-sm text-white/70">{gradient.angle}°</span>
           </div>
           <Slider
             value={[gradient.angle]}
@@ -86,11 +86,11 @@ export const GradientControls = ({ gradient, onChange }: GradientControlsProps) 
 
       {/* Atmospheric Effects */}
       {(gradient.type === "atmospheric" || gradient.type === "mesh") && (
-        <Card className="p-4 space-y-4">
+        <Card className="p-4 space-y-4 glass-dark border-white/10">
           <div className="space-y-3">
             <div className="flex justify-between">
-              <Label>Blur</Label>
-              <span className="text-sm text-muted-foreground">{gradient.blur || 0}px</span>
+              <Label className="text-white">Blur</Label>
+              <span className="text-sm text-white/70">{gradient.blur || 0}px</span>
             </div>
             <Slider
               value={[gradient.blur || 0]}
@@ -103,8 +103,8 @@ export const GradientControls = ({ gradient, onChange }: GradientControlsProps) 
           
           <div className="space-y-3">
             <div className="flex justify-between">
-              <Label>Noise</Label>
-              <span className="text-sm text-muted-foreground">{gradient.noise || 0}%</span>
+              <Label className="text-white">Noise</Label>
+              <span className="text-sm text-white/70">{gradient.noise || 0}%</span>
             </div>
             <Slider
               value={[gradient.noise || 0]}
@@ -118,14 +118,15 @@ export const GradientControls = ({ gradient, onChange }: GradientControlsProps) 
       )}
 
       {/* Color Stops */}
-      <Card className="p-4 space-y-3">
+      <Card className="p-4 space-y-3 glass-dark border-white/10">
         <div className="flex justify-between items-center">
-          <Label>Color Stops</Label>
+          <Label className="text-white">Color Stops</Label>
           <Button
             size="sm"
             variant="outline"
             onClick={addStop}
             aria-label="Add color stop"
+            className="glass-dark border-white/10 text-white hover:bg-white/10"
           >
             <Plus className="h-4 w-4 mr-1" />
             Add
@@ -149,7 +150,7 @@ export const GradientControls = ({ gradient, onChange }: GradientControlsProps) 
                       type="text"
                       value={stop.color}
                       onChange={(e) => updateStop(index, e.target.value)}
-                      className="flex-1 h-10 rounded-md border border-input bg-background px-3 py-2 text-sm"
+                      className="flex-1 h-10 rounded-md border border-white/10 bg-black/20 px-3 py-2 text-sm text-white"
                       aria-label={`Color hex ${index + 1}`}
                     />
                   </div>
@@ -166,7 +167,7 @@ export const GradientControls = ({ gradient, onChange }: GradientControlsProps) 
                 </div>
                 
                 <div className="space-y-1">
-                  <div className="flex justify-between text-xs text-muted-foreground">
+                  <div className="flex justify-between text-xs text-white/70">
                     <span>Position</span>
                     <span>{stop.position}%</span>
                   </div>
@@ -183,7 +184,7 @@ export const GradientControls = ({ gradient, onChange }: GradientControlsProps) 
                 {(gradient.type === "atmospheric" || gradient.type === "mesh") && (
                   <div className="grid grid-cols-2 gap-2">
                     <div className="space-y-1">
-                      <div className="flex justify-between text-xs text-muted-foreground">
+                      <div className="flex justify-between text-xs text-white/70">
                         <span>X</span>
                         <span>{Math.round(stop.x || 0)}%</span>
                       </div>
@@ -196,7 +197,7 @@ export const GradientControls = ({ gradient, onChange }: GradientControlsProps) 
                       />
                     </div>
                     <div className="space-y-1">
-                      <div className="flex justify-between text-xs text-muted-foreground">
+                      <div className="flex justify-between text-xs text-white/70">
                         <span>Y</span>
                         <span>{Math.round(stop.y || 0)}%</span>
                       </div>
