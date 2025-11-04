@@ -17,10 +17,10 @@ export default defineConfig(({ mode }) => ({
       registerType: "autoUpdate",
       includeAssets: ["favicon.svg", "icon-192.png", "icon-512.png"],
       manifest: {
-        name: "Gradients",
-        short_name: "Gradients",
-        description: "Create stunning gradient wallpapers with intuitive controls",
-        theme_color: "#7c3aed",
+        name: "Canvas",
+        short_name: "Canvas",
+        description: "Create beautiful wallpapers with intuitive controls",
+        theme_color: "#000000",
         background_color: "#ffffff",
         display: "standalone",
         icons: [

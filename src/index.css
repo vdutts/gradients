@@ -125,4 +125,9 @@ All colors MUST be HSL.
     border: 1px solid rgba(255, 255, 255, 0.08);
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15);
   }
+
+  /* Slider glass utilities */
+  .slider-track { background: rgba(255, 255, 255, 0.18); }
+  .slider-range { background: rgba(255, 255, 255, 0.9); }
+  .slider-thumb { background: rgba(255, 255, 255, 0.95); border: 1px solid rgba(255, 255, 255, 0.7); box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
 }
